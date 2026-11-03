@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0a">
+<title>OHIO Restaurant</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+
+:root{
+  --glass:linear-gradient(135deg,rgba(255,255,255,.18),rgba(255,255,255,.04));
+  --glass-border:rgba(255,255,255,.22);
+  --accent:#f1d9a0;
+  --blur:18px;
+  --pad-x:10%;
+}
+
+body{
+  font-family:Poppins,sans-serif;
+  color:#fff;
+  background:#0a0a0a;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+/* нейтральный белый свет за стеклом, чтобы стекло было видно */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:
+    radial-gradient(480px 480px at 10% 15%,rgba(255,255,255,.12),transparent 70%),
+    radial-gradient(560px 560px at 92% 40%,rgba(255,255,255,.09),transparent 70%),
+    radial-gradient(520px 520px at 30% 92%,rgba(255,255,255,.10),transparent 70%);
+  filter:blur(30px);
+}
+
+/* ---------- NAV ---------- */
+nav{
+  position:fixed;
+  top:0;left:0;
+  width:100%;
+  z-index:100;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  padding:14px var(--pad-x);
+  padding-top:max(14px,env(safe-area-inset-top));
+  background:var(--glass);
+  -webkit-backdrop-filter:blur(var(--blur)) saturate(180%);
+  backdrop-filter:blur(var(--blur)) saturate(180%);
+  border-bottom:1px solid var(--glass-border);
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,.5),
+    0 10px 30px rgba(0,0,0,.35);
+}
+.logo{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  letter-spacing:4px;
+  font-size:20px;
+}
+.links{
+  display:flex;
+  gap:20px;
+  white-space:nowrap;
+}
+nav a{
+  color:#fff;
+  text-decoration:none;
+  opacity:.75;
+  transition:.3s;
+}
+nav a:hover{opacity:1;color:var(--accent)}
+
+/* ---------- HEADER ---------- */
+header{
+  position:relative;
+  min-height:100vh;
+  min-height:100svh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:100px 6% 60px;
+  background:
+    linear-gradient(rgba(0,0,0,.55),rgba(10,10,10,.95)),
+    url('https://images.unsplash.com/photo-1555992336-03a23c7b20ee') center/cover;
+}
+header h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(46px,12vw,84px);
+  letter-spacing:clamp(6px,2vw,14px);
+  text-shadow:0 6px 30px rgba(0,0,0,.6);
+}
+header p{
+  margin-top:8px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  font-size:clamp(11px,3vw,14px);
+  opacity:.8;
+}
+
+/* ---------- КНОПКА: LIQUID GLASS ---------- */
+.btn{
+  position:relative;
+  display:inline-block;
+  margin-top:34px;
+  padding:15px 48px;
+  color:#fff;
+  text-decoration:none;
+  font-weight:500;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  border-radius:999px;
+  background:linear-gradient(135deg,rgba(255,255,255,.3),rgba(255,255,255,.06));
+  -webkit-backdrop-filter:blur(14px) saturate(180%);
+  backdrop-filter:blur(14px) saturate(180%);
+  border:1px solid rgba(255,255,255,.35);
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,.75),
+    inset 0 -10px 20px rgba(255,255,255,.08),
+    0 8px 32px rgba(0,0,0,.4);
+  text-shadow:0 1px 6px rgba(0,0,0,.4);
+  transition:transform .3s ease,box-shadow .3s ease;
+}
+.btn:active{transform:scale(.96)}
+
+/* ---------- СЕКЦИИ ---------- */
+section{padding:90px var(--pad-x)}
+
+h2{
+  text-align:center;
+  font-family:'Playfair Display',serif;
+  font-size:clamp(24px,6vw,38px);
+  letter-spacing:3px;
+  margin-bottom:40px;
+  padding-bottom:16px;
+  position:relative;
+  overflow-wrap:anywhere;
+}
+h2::after{
+  content:"";
+  position:absolute;
+  left:50%;bottom:0;
+  transform:translateX(-50%);
+  width:90px;height:2px;
+  border-radius:2px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.8),transparent);
+}
+.menu + h2{margin-top:70px}
+
+/* ---------- GRID ---------- */
+.menu{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));
+  gap:20px;
+}
+
+/* ---------- КАРТОЧКИ: LIQUID GLASS ---------- */
+.card{
+  --mx:50%;
+  --my:0%;
+  position:relative;
+  padding:22px;
+  border-radius:22px;
+  overflow:hidden;
+  background:
+    radial-gradient(240px circle at var(--mx) var(--my),rgba(255,255,255,.2),transparent 60%),
+    linear-gradient(135deg,rgba(255,255,255,.16),rgba(255,255,255,.04) 55%,rgba(255,255,255,.09));
+  -webkit-backdrop-filter:blur(var(--blur)) saturate(180%);
+  backdrop-filter:blur(var(--blur)) saturate(180%);
+  border:1px solid var(--glass-border);
+  box-shadow:
+    inset 0 1px 1px rgba(255,255,255,.65),
+    inset 0 -12px 24px rgba(255,255,255,.04),
+    0 12px 32px rgba(0,0,0,.35);
+  transition:transform .35s ease,box-shadow .35s ease,border-color .35s ease;
+}
+/* неподвижный глянец сверху */
+.card::after{
+  content:"";
+  position:absolute;
+  top:0;left:0;
+  width:100%;height:50%;
+  background:linear-gradient(180deg,rgba(255,255,255,.14),transparent);
+  border-radius:inherit;
+  pointer-events:none;
+}
+.card h3{
+  position:relative;
+  z-index:1;
+  font-weight:500;
+  font-size:17px;
+  line-height:1.35;
+  color:#fff;
+  overflow-wrap:anywhere;
+}
+.price{
+  position:relative;
+  z-index:1;
+  margin-top:10px;
+  font-weight:600;
+  font-size:19px;
+  letter-spacing:1px;
+  color:var(--accent);
+  white-space:nowrap;
+}
+
+/* hover только там, где есть мышь */
+@media (hover:hover){
+  .card:hover{
+    transform:translateY(-8px);
+    border-color:rgba(255,255,255,.45);
+    box-shadow:
+      inset 0 1px 1px rgba(255,255,255,.9),
+      inset 0 -12px 24px rgba(255,255,255,.08),
+      0 18px 44px rgba(255,255,255,.12),
+      0 18px 40px rgba(0,0,0,.45);
+  }
+  .btn:hover{
+    transform:translateY(-3px) scale(1.05);
+    box-shadow:
+      inset 0 1px 1px rgba(255,255,255,.95),
+      inset 0 -10px 20px rgba(255,255,255,.14),
+      0 12px 40px rgba(255,255,255,.2);
+  }
+}
+
+/* ---------- ПЛАНШЕТЫ ---------- */
+@media (max-width:900px){
+  :root{--pad-x:6%}
+  section{padding:70px var(--pad-x)}
+}
+
+/* ---------- ТЕЛЕФОНЫ ---------- */
+@media (max-width:600px){
+  :root{--pad-x:5%;--blur:12px}
+
+  nav{padding-bottom:10px}
+  .logo{font-size:17px;letter-spacing:3px}
+  .links{gap:14px;font-size:13px}
+
+  section{padding:56px var(--pad-x)}
+  h2{margin-bottom:28px}
+  .menu + h2{margin-top:50px}
+
+  .menu{grid-template-columns:1fr;gap:12px}
+
+  /* компактная карточка: название слева, цена справа */
+  .card{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:14px;
+    padding:16px 18px;
+    border-radius:18px;
+  }
+  .card h3{font-size:15px}
+  .price{margin-top:0;font-size:17px;flex-shrink:0}
+
+  .btn{padding:14px 40px;letter-spacing:2px}
+}
+
+/* очень узкие экраны */
+@media (max-width:360px){
+  .links{gap:10px;font-size:12px}
+  .card h3{font-size:14px}
+}
+
+/* если браузер не умеет blur — делаем фон плотнее */
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  nav,.card,.btn{background:rgba(40,40,55,.85)}
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="logo">OHIO</div>
+  <div class="links">
+    <a href="#app">Appetizers</a>
+    <a href="#main">Main</a>
+    <a href="#alcoholic-drinks">Drinks</a>
+  </div>
+</nav>
+
+<header>
+  <div>
+    <h1>OHIO</h1>
+    <p>Luxury taste. Relaxed vibe.</p>
+    <a href="#main" class="btn">Menu</a>
+  </div>
+</header>
+
+<!-- APPETIZERS -->
+<section id="app">
+<h2>Appetizers</h2>
+<div class="menu">
+<div class="card"><h3>Turşu</h3><div class="price">8.00</div></div>
+<div class="card"><h3>Turşu Assorti</h3><div class="price">6.00</div></div>
+<div class="card"><h3>İvanovka ev kolbasasi Assorti</h3><div class="price">13.00</div></div>
+<div class="card"><h3>Ağ ev Pendirli</h3><div class="price">5.00</div></div>
+<div class="card"><h3>Pendir Assorti</h3><div class="price">14.00</div></div>
+<div class="card"><h3>Zeytun</h3><div class="price">4.00</div></div>
+<div class="card"><h3>Blinçik ət ev sayağı</h3><div class="price">3.00</div></div>
+<div class="card"><h3>Leço ev sayağı</h3><div class="price">7.00</div></div>
+<div class="card"><h3>İkra ev sayağı</h3><div class="price">7.00</div></div>
+<div class="card"><h3>Paştet ev sayağı</h3><div class="price">9.00</div></div>
+<div class="card"><h3>Tərəvəz Assorti</h3><div class="price">6.00</div></div>
+<div class="card"><h3>Vetçina hinduşka və ət</h3><div class="price">14.00</div></div>
+<div class="card"><h3>Baba qanuş,Livan yeməyi</h3><div class="price">8.00</div></div>
+</div>
+</section>
+
+<!-- SOUPS -->
+<section>
+<h2>Soups</h2>
+<div class="menu">
+<div class="card"><h3>Ispanaq şorbası</h3><div class="price">6.00</div></div>
+<div class="card"><h3>Çilli şorbası</h3><div class="price">9.00</div></div>
+<div class="card"><h3>Broccoli şorbası</h3><div class="price">7.00</div></div>
+<div class="card"><h3>İvanovka borş</h3><div class="price">8.00</div></div>
+<div class="card"><h3>Düşbərə</h3><div class="price">7.00</div></div>
+<div class="card"><h3>Əriştə</h3><div class="price">8.00</div></div>
+</div>
+</section>
+
+<!-- MAIN -->
+<section id="main">
+<h2>Main(ət)</h2>
+<div class="menu">
+<div class="card"><h3>Roast beef</h3><div class="price">17.00</div></div>
+<div class="card"><h3>Borito can əti Meksikan sayağı</h3><div class="price">17.00</div></div>
+<div class="card"><h3>Şərab sousunda quzu</h3><div class="price">17.00</div></div>
+<div class="card"><h3>Stragonov</h3><div class="price">16.00</div></div>
+<div class="card"><h3>Sac quzu (2 nəfərlik)</h3><div class="price">30.00</div></div>
+<div class="card"><h3>Sac can əti (2 nəfərlik)</h3><div class="price">30.00</div></div>
+<div class="card"><h3>Pip dolçasi,ev sayağı</h3><div class="price">12.00</div></div>
+<div class="card"><h3>Ev sayağı,kotlet garnier ilə</h3><div class="price">12.00</div></div>
+<div class="card"><h3>Quzu nar qovurma</h3><div class="price">16.00</div></div>
+<div class="card"><h3>Can əti albalı ilə</h3><div class="price">17.00</div></div>
+<div class="card"><h3>Piti</h3><div class="price">9.00</div></div>
+<div class="card"><h3>Steak</h3><div class="price">34.00</div></div>
+</div>
+<h2>Main(Toyuq)</h2>
+<div class="menu">
+<div class="card"><h3>Caşeyu çiken</h3><div class="price">15.00</div></div>
+<div class="card"><h3>Toyuq borito</h3><div class="price">15.00</div></div>
+<div class="card"><h3>Stragonov</h3><div class="price">14.00</div></div>
+<div class="card"><h3>Toyuq filesi nar qovurma</h3><div class="price">13.00</div></div>
+<div class="card"><h3>Toyuq göbələk sousu ilə</h3><div class="price">13.00</div></div>
+<div class="card"><h3>Kiyev kotlet garnier ilə</h3><div class="price">15.00</div></div>
+<div class="card"><h3>Tabaka ev sayağı kartof ilə (2 nəfərlik)</h3><div class="price">24.00</div></div>
+<div class="card"><h3>Sac kənd çolpası ilə</h3><div class="price">27.00</div></div>
+<div class="card"><h3>Julyen</h3><div class="price">13.00</div></div>
+<div class="card"><h3>Çığırtma kənd çolpası ilə</h3><div class="price">14.00</div></div>
+<div class="card"><h3>Fisincan plov kənd çolpası ilə</h3><div class="price">16.00</div></div>
+<div class="card"><h3>Kənd çolpası alça əzməsi ilə (2 nəfərlik)</h3><div class="price">26.00</div></div>
+</div>
+</section>
+
+<section>
+<h2>Pastalar</h2>
+<div class="menu">
+<div class="card"><h3>Pad Thai Pasta</h3><div class="price">15.00</div></div>
+<div class="card"><h3>Fetuchini Alfredo</h3><div class="price">16.00</div></div>
+<div class="card"><h3>Gürzə</h3><div class="price">10.00</div></div>
+<div class="card"><h3>Pelmeni,Ev sayağı</h3><div class="price">10.00</div></div>
+<div class="card"><h3>Spagetti Balanez</h3><div class="price">14.00</div></div>
+<div class="card"><h3>Spagetti Toyuq Pesto Sousunda</h3><div class="price">14.00</div></div>
+<div class="card"><h3>Xəngəl</h3><div class="price">12.00</div></div>
+</div>
+</section>
+
+<!-- FAST FOOD -->
+<section>
+<h2>Fast Food</h2>
+<div class="menu">
+<div class="card"><h3>Burger(ət/toyuq)</h3><div class="price">14.00/12.00</div></div>
+<div class="card"><h3>Nuggets Fri ilə</h3><div class="price">12.00</div></div>
+<div class="card"><h3>Kroket Kombo (2 nəfərlik)</h3><div class="price">19.00</div></div>
+<div class="card"><h3>Pendir çubuqları</h3><div class="price">8.00</div></div>
+</div>
+</section>
+
+<section>
+<h2>Salatlar</h2>
+<div class="menu">
+<div class="card"><h3>Avocado Toyuq</h3><div class="price">10.00</div></div>
+<div class="card"><h3>Xırt-xırt Badımcan</h3><div class="price">10.00</div></div>
+<div class="card"><h3>Sezar Toyuq</h3><div class="price">12.00</div></div>
+<div class="card"><h3>Sezar Krevetka</h3><div class="price">13.00</div></div>
+<div class="card"><h3>Çoban</h3><div class="price">6.00</div></div>
+</div>
+</section>
+
+<section>
+<h2>Balıq</h2>
+<div class="menu">
+<div class="card"><h3>Forel tavada</h3><div class="price">16.00</div></div>
+<div class="card"><h3>Qızılbalıq</h3><div class="price">24.00</div></div>
+</div>
+</section>
+
+<section>
+<h2>Garnier</h2>
+<div class="menu">
+<div class="card"><h3>Düyü,Püre,Ev Sayağı Kartof,Fri</h3><div class="price">4.00</div></div>
+</div>
+</section>
+
+<section id="breakfast">
+    <h2>SƏHƏR YEMƏKLƏRİ</h2>
+    <div class="menu">
+        <div class="card"><h3>İvanovka Set (2 nəfərlik)</h3><div class="price">20.00</div></div>
+        <div class="card"><h3>Kənd Yumurtası Ev Sosiskası ilə</h3><div class="price">10.00</div></div>
+        <div class="card"><h3>Kükü</h3><div class="price">6.00</div></div>
+        <div class="card"><h3>Sadə Omlet</h3><div class="price">5.00</div></div>
+        <div class="card"><h3>Pendirli Omlet</h3><div class="price">7.00</div></div>
+        <div class="card"><h3>OHIO Mix Omlet</h3><div class="price">12.00</div></div>
+        <div class="card"><h3>Pomidor yumurta</h3><div class="price">7.00</div></div>
+        <div class="card"><h3>Blinçik sadə (5 ədəd)</h3><div class="price">6.00</div></div>
+        <div class="card"><h3>Soyutma yumurta (1 ədəd)</h3><div class="price">1.00</div></div>
+        <div class="card"><h3>Qlazok yumurta (2 ədəd)</h3><div class="price">4.00</div></div>
+        <div class="card"><h3>Qrenki (4 ədəd)</h3><div class="price">5.00</div></div>
+        <div class="card"><h3>Klyarda Sosiska (4 ədəd)</h3><div class="price">7.00</div></div>
+        <div class="card"><h3>Kaşa</h3><div class="price">6.00</div></div>
+        <div class="card"><h3>Sirnik (3 ədəd)</h3><div class="price">5.00</div></div>
+    </div>
+</section>
+
+<section id="alcoholic-drinks">
+    <h2>PİVƏLƏR</h2>
+    <div class="menu">
+        <div class="card"><h3>OHIO Pivə (0.5L)</h3><div class="price">9.00</div></div>
+        <div class="card"><h3>Xırdalan (0.5L)</h3><div class="price">6.00</div></div>
+        <div class="card"><h3>Miller (0.33L)</h3><div class="price">7.00</div></div>
+        <div class="card"><h3>Qızardılmış Düşbərə, Saçaq Pendiri</h3><div class="price">6.00</div></div>
+    </div>
+
+    <h2>EV ÇAXIRLARI / HOMEMADE WINES</h2>
+    <div class="menu">
+        <div class="card"><h3>Quru Qırmızı Çaxır / Dry Red Wine (Butulka / Bottle)</h3><div class="price">28.00</div></div>
+        <div class="card"><h3>Quru Qırmızı Çaxır / Dry Red Wine (Bakal / Glass 150 ml)</h3><div class="price">8.00</div></div>
+        <div class="card"><h3>Kam Şirin Qırmızı Çaxır / Semi-Dry Red (Butulka / Bottle)</h3><div class="price">25.00</div></div>
+        <div class="card"><h3>Kam Şirin Qırmızı Çaxır / Semi-Dry Red (Bakal / Glass 150 ml)</h3><div class="price">6.00</div></div>
+        <div class="card"><h3>Isabel Quru / Isabel Dry (Butulka / Bottle)</h3><div class="price">20.00</div></div>
+        <div class="card"><h3>Meyvə Çaxırları / Fruit Wines (Butulka / Bottle)</h3><div class="price">20.00</div></div>
+    </div>
+
+    <h2>ARAQLAR / HARD LIQUOR</h2>
+    <div class="menu">
+        <div class="card"><h3>Ev Tut arağı (60%) (150 ml)</h3><div class="price">20.00</div></div>
+        <div class="card"><h3>Ev Şaftalı (40%) (150 ml)</h3><div class="price">15.00</div></div>
+    </div>
+
+    <h2>EV LİKORLAR (16-18%)</h2>
+    <div class="menu">
+        <div class="card"><h3>Assorti (300 ml)</h3><div class="price">15.00</div></div>
+        <div class="card"><h3>Zoqal Ərağı 70% (150 ml)</h3><div class="price">18.00</div></div>
+    </div>
+</section>
+
+<section id="non-alcoholic">
+    <h2>KOFE SETİ</h2>
+    <div class="menu">
+        <div class="card"><h3>Kofe Amerikano, 1 şirniyyat (1 nəfərlik)</h3><div class="price">10.00</div></div>
+        <div class="card"><h3>Kofe Amerikano, 1 cheesecake (1 nəfərlik)</h3><div class="price">15.00</div></div>
+        <div class="card"><h3>Kofe Amerikano, 1 tiramisu (1 nəfərlik)</h3><div class="price">16.00</div></div>
+    </div>
+
+    <h2>ÇAY SETİ</h2>
+    <div class="menu">
+        <div class="card"><h3>2 nəfərlik çay ev mürəbbəsi ilə</h3><div class="price">16.00</div></div>
+        <div class="card"><h3>2 nəfərlik çay ev şirniyyatı ilə</h3><div class="price">12.00</div></div>
+        <div class="card"><h3>2 nəfərlik çay ev cheesecake ilə</h3><div class="price">15.00</div></div>
+        <div class="card"><h3>2 nəfərlik çay ev tiramisu ilə</h3><div class="price">16.00</div></div>
+    </div>
+
+    <h2>SƏRİN İÇKİLƏR</h2>
+    <div class="menu">
+        <div class="card"><h3>Ev Kompotları</h3><div class="price">5.00</div></div>
+        <div class="card"><h3>Nataxtari</h3><div class="price">4.00</div></div>
+        <div class="card"><h3>Cola, Pepsi (0.33L)</h3><div class="price">3.00</div></div>
+        <div class="card"><h3>Təzə çəkilmiş şirələr (0.25L)</h3><div class="price">8.00</div></div>
+        <div class="card"><h3>Ev Sayağı Şaftalı şirəsi (1L)</h3><div class="price">9.00</div></div>
+        <div class="card"><h3>Qızıl əhmədi alma şirəsi (1L)</h3><div class="price">13.00</div></div>
+        <div class="card"><h3>Sirab su (0.5L)</h3><div class="price">3.00</div></div>
+    </div>
+</section>
+
+<script>
+/* световое пятно на стекле следует за мышью (на телефонах не нужно) */
+if (window.matchMedia('(hover:hover)').matches) {
+  document.querySelectorAll('.card').forEach(function (card) {
+    card.addEventListener('pointermove', function (e) {
+      var r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+    card.addEventListener('pointerleave', function () {
+      card.style.setProperty('--mx', '50%');
+      card.style.setProperty('--my', '0%');
+    });
+  });
+}
+</script>
+
+</body>
+</html>
